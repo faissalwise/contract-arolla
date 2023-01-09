@@ -8,15 +8,15 @@ import io.cucumber.java.en.When;
 
 public class TestStepDefs {
 
+  private Employee employee;
+
   @Given("employee has a {string} contract with a base salary of {int}")
   public void employeeHasAContractWithABaseSalaryOf(String contractType, int baseSalary) {
-  }
-
-  @When("employee has received his salary")
-  public void employeeHasReceivedHisSalary() {
+    employee = new Employee(contractType, baseSalary);
   }
 
   @Then("the net salary is {int}")
   public void theNetSalaryIs(int netSalary) {
+    assertThat(employee.getNetSalary()).isEqualTo(netSalary);
   }
 }
