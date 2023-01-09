@@ -8,3 +8,8 @@ Feature: Test Contracts
     Given employee has a "referent" contract with a base salary of 1500
     When margin is 45000
     Then the net salary is 2200
+
+  Scenario: Consulting contract
+    Given employee has a "consulting" contract with a base salary of 1500
+    When margin is 45000
+    Then the net salary is 3000

@@ -2,8 +2,8 @@ package cucumber;
 
 public class Employee {
 
-  private String contract;
-  private int baseSalary;
+  private final String contract;
+  private final int baseSalary;
   private int margin;
 
   public Employee(String contract, int baseSalary) {
@@ -14,6 +14,9 @@ public class Employee {
   public int getNetSalary() {
     if ("referent".equals(contract)) {
       return baseSalary + (margin - 35000) * 7 / 100;
+    }
+    if ("consulting".equals(contract)) {
+      return baseSalary + (margin - 35000) * 15 / 100;
     }
 
     return this.baseSalary;
