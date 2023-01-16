@@ -3,7 +3,7 @@ package cucumber;
 public class Employee {
   private final ContractType contractType;
   private final int baseSalary;
-  private int margin;
+  private int revenue;
 
   public Employee(String contract, int baseSalary) {
     this.contractType = ContractType.valueOf(contract.toUpperCase());
@@ -11,11 +11,15 @@ public class Employee {
   }
 
   public int getNetSalary() {
-    return baseSalary + (margin - 35000) * contractType.percent / 100;
+    return baseSalary + (calculateMargin() - 35000) * contractType.percent / 100;
   }
 
-  public void setMargin(int margin) {
-    this.margin = margin;
+  public void setRevenue(int revenue) {
+    this.revenue = revenue;
+  }
+
+  public int calculateMargin(){
+    return revenue-(baseSalary*16/10);
   }
 
   private enum ContractType {

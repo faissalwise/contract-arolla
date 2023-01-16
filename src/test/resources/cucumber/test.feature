@@ -2,10 +2,10 @@ Feature: Test Contracts
 
   Scenario Outline: any contract
     Given employee has a "<type>" contract with a base salary of <base salary>
-    When margin is <margin>
+    When revenue is <revenue>
     Then the net salary is <net salary>
     Examples:
-      | type       | base salary | margin | net salary |
-      | normal     | 1000        | 0      | 1000       |
-      | referent   | 1500        | 45000  | 2200       |
-      | consulting | 1500        | 45000  | 3000       |
+      | type       | base salary | revenue | net salary |
+      | normal     | 75000       | 0       | 75000      |
+      | referent   | 80000       | 173000  | 80700      |
+      | consulting | 90000       | 189000  | 91500      |

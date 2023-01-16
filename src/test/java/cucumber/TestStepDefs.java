@@ -20,8 +20,8 @@ public class TestStepDefs {
     assertThat(employee.getNetSalary()).isEqualTo(netSalary);
   }
 
-  @When("margin is {int}")
-  public void marginIs(int margin) {
-    employee.setMargin(margin);
+  @When("revenue is {int}")
+  public void revenueIs(int revenue) {
+    employee.setRevenue(revenue);
   }
 }
