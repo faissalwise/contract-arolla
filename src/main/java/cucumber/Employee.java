@@ -1,15 +1,37 @@
 package cucumber;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Employee {
+  private final SalaryService salaryService = new SalaryService(this);
   private ContractType contractType;
   private int baseSalary;
   private int revenue;
 
   private boolean validated;
   private String joinedDate;
+
+  public void setContractType(ContractType contractType) {
+    this.contractType = contractType;
+  }
+
+  public SalaryService getSalaryService() {
+    return salaryService;
+  }
+
+  public int getBaseSalary() {
+    return baseSalary;
+  }
+
+  public int getRevenue() {
+    return revenue;
+  }
+
+  public boolean isValidated() {
+    return validated;
+  }
+
+  public String getJoinedDate() {
+    return joinedDate;
+  }
 
   public void setValidated(boolean validated) {
     this.validated = validated;
@@ -29,7 +51,7 @@ public class Employee {
   }
 
   public int getNetSalary() {
-    return baseSalary + Math.max(0, (calculateMargin() - 35000) * contractType.percent / 100);
+    return salaryService.getNetSalary();
   }
 
   public void setRevenue(int revenue) {
@@ -37,20 +59,11 @@ public class Employee {
   }
 
   public int calculateMargin() {
-    return revenue - (baseSalary * 16 / 10);
+    return salaryService.calculateMargin();
   }
 
   public void determineContractType(String today) {
-    if (validated) {
-      contractType = ContractType.CONSULTING;
-    } else {
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-      LocalDate joinedLocalDate = LocalDate.parse(this.joinedDate, formatter);
-      LocalDate todayLocalDate = LocalDate.parse(today, formatter);
-      int years = todayLocalDate.getYear() - joinedLocalDate.getYear();
-      if (years > 2) contractType = ContractType.REFERENT;
-      else contractType = ContractType.NORMAL;
-    }
+    salaryService.determineContractType(today);
   }
 
   public enum ContractType {
@@ -58,10 +71,11 @@ public class Employee {
     REFERENT(7),
     CONSULTING(15);
 
-    private final int percent;
+    public final int percent;
 
     ContractType(int percent) {
       this.percent = percent;
     }
+
   }
 }
