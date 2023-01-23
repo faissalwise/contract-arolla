@@ -4,21 +4,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class SalaryService {
-    private final Employee employee;
 
-    public SalaryService(Employee employee) {
-        this.employee = employee;
+    public int getNetSalary(Employee employee) {
+        return employee.getBaseSalary() + Math.max(0, (calculateMargin(employee) - 35000) * employee.getContractType().percent / 100);
     }
 
-    public int getNetSalary() {
-        return employee.getBaseSalary() + Math.max(0, (calculateMargin() - 35000) * employee.getContractType().percent / 100);
-    }
-
-    public int calculateMargin() {
+    private int calculateMargin(Employee employee) {
         return employee.getRevenue() - (employee.getBaseSalary() * 16 / 10);
     }
 
-    public void determineContractType(String today) {
+    public void determineContractType(String today, Employee employee) {
         if (employee.isValidated()) {
             employee.setContractType(Employee.ContractType.CONSULTING);
         } else {

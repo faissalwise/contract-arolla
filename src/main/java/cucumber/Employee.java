@@ -1,7 +1,7 @@
 package cucumber;
 
 public class Employee {
-  private final SalaryService salaryService = new SalaryService(this);
+  private final SalaryService salaryService = new SalaryService();
   private ContractType contractType;
   private int baseSalary;
   private int revenue;
@@ -11,10 +11,6 @@ public class Employee {
 
   public void setContractType(ContractType contractType) {
     this.contractType = contractType;
-  }
-
-  public SalaryService getSalaryService() {
-    return salaryService;
   }
 
   public int getBaseSalary() {
@@ -51,19 +47,15 @@ public class Employee {
   }
 
   public int getNetSalary() {
-    return salaryService.getNetSalary();
+    return salaryService.getNetSalary(this);
   }
 
   public void setRevenue(int revenue) {
     this.revenue = revenue;
   }
 
-  public int calculateMargin() {
-    return salaryService.calculateMargin();
-  }
-
   public void determineContractType(String today) {
-    salaryService.determineContractType(today);
+    salaryService.determineContractType(today, this);
   }
 
   public enum ContractType {
