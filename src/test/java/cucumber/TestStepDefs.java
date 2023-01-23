@@ -11,12 +11,11 @@ import io.cucumber.java.en.When;
 
 public class TestStepDefs {
 
-  private Employee employee;
+  private final Employee employee = new Employee();
   private final SalaryService salaryService = new SalaryService();
 
   @Given("employee has a {string} contract with a base salary of {int}")
   public void employeeHasAContractWithABaseSalaryOf(String contractType, int baseSalary) {
-    employee = new Employee();
     employee.setContractType(ContractType.valueOf(contractType.toUpperCase()));
     employee.setBaseSalary(baseSalary);
   }
@@ -33,7 +32,6 @@ public class TestStepDefs {
 
   @Given("employee joined on {string}")
   public void employeeJoinedOn(String joinedDate) {
-    employee = new Employee();
     employee.setJoinedDate(joinedDate);
   }
 
