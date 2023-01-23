@@ -1,7 +1,6 @@
 package cucumber;
 
 public class Employee {
-  private final SalaryService salaryService = new SalaryService();
   private ContractType contractType;
   private int baseSalary;
   private int revenue;
@@ -9,8 +8,20 @@ public class Employee {
   private boolean validated;
   private String joinedDate;
 
+  public Employee() {
+
+  }
+
   public void setContractType(ContractType contractType) {
     this.contractType = contractType;
+  }
+
+  public void setBaseSalary(int baseSalary) {
+    this.baseSalary = baseSalary;
+  }
+
+  public void setJoinedDate(String joinedDate) {
+    this.joinedDate = joinedDate;
   }
 
   public int getBaseSalary() {
@@ -37,25 +48,8 @@ public class Employee {
     return contractType;
   }
 
-  public Employee(String joinedDate) {
-    this.joinedDate = joinedDate;
-  }
-
-  public Employee(String contract, int baseSalary) {
-    this.contractType = ContractType.valueOf(contract.toUpperCase());
-    this.baseSalary = baseSalary;
-  }
-
-  public int getNetSalary() {
-    return salaryService.getNetSalary(this);
-  }
-
   public void setRevenue(int revenue) {
     this.revenue = revenue;
-  }
-
-  public void determineContractType(String today) {
-    salaryService.determineContractType(today, this);
   }
 
   public enum ContractType {

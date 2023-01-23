@@ -12,15 +12,18 @@ import io.cucumber.java.en.When;
 public class TestStepDefs {
 
   private Employee employee;
+  private final SalaryService salaryService = new SalaryService();
 
   @Given("employee has a {string} contract with a base salary of {int}")
   public void employeeHasAContractWithABaseSalaryOf(String contractType, int baseSalary) {
-    employee = new Employee(contractType, baseSalary);
+    employee = new Employee();
+    employee.setContractType(ContractType.valueOf(contractType.toUpperCase()));
+    employee.setBaseSalary(baseSalary);
   }
 
   @Then("the net salary is {int}")
   public void theNetSalaryIs(int netSalary) {
-    assertThat(employee.getNetSalary()).isEqualTo(netSalary);
+    assertThat(salaryService.getNetSalary(employee)).isEqualTo(netSalary);
   }
 
   @When("revenue is {int}")
@@ -29,22 +32,23 @@ public class TestStepDefs {
   }
 
   @Given("employee joined on {string}")
-  public void employeeJoinedOn(String arg0) {
-    employee = new Employee(arg0);
+  public void employeeJoinedOn(String joinedDate) {
+    employee = new Employee();
+    employee.setJoinedDate(joinedDate);
   }
 
   @And("employee validated is {string}")
-  public void employeeValidatedIs(String arg0) {
-    employee.setValidated(Boolean.parseBoolean(arg0));
+  public void employeeValidatedIs(String isValidated) {
+    employee.setValidated(Boolean.parseBoolean(isValidated));
   }
 
   @Then("contract type is {string}")
-  public void contractTypeIs(String arg0) {
-    assertEquals(ContractType.valueOf(arg0.toUpperCase()), employee.getContractType());
+  public void contractTypeIs(String contractType) {
+    assertEquals(ContractType.valueOf(contractType.toUpperCase()), employee.getContractType());
   }
 
   @When("determine contract type for {string}")
-  public void determineContractTypeFor(String arg0) {
-    employee.determineContractType(arg0);
+  public void determineContractTypeFor(String today) {
+    salaryService.determineContractType(today,employee);
   }
 }
