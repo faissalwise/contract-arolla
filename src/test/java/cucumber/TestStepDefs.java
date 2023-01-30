@@ -8,11 +8,23 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class TestStepDefs {
 
   private final Employee employee = new Employee();
-  private final SalaryService salaryService = new SalaryService();
+  private final Calendar calendar =
+      new Calendar() {
+        @Override
+        public LocalDate today() {
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+          return LocalDate.parse(today, formatter);
+        }
+      };
+
+  private final SalaryService salaryService = new SalaryService(calendar);
+  private String today;
 
   @Given("employee has a {string} contract with a base salary of {int}")
   public void employeeHasAContractWithABaseSalaryOf(String contractType, int baseSalary) {
@@ -47,6 +59,7 @@ public class TestStepDefs {
 
   @When("determine contract type for {string}")
   public void determineContractTypeFor(String today) {
-    salaryService.determineContractType(today,employee);
+    this.today = today;
+    salaryService.determineContractType(employee);
   }
 }
