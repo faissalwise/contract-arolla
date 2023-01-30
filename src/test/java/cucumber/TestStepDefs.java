@@ -62,4 +62,14 @@ public class TestStepDefs {
     this.today = today;
     salaryService.determineContractType(employee);
   }
+
+  @And("base salary is {int}")
+  public void baseSalaryIs(int baseSalary) {
+    employee.setBaseSalary(baseSalary);
+  }
+
+  @And("today is {string}")
+  public void todayIs(String today) {
+    this.today=today;
+  }
 }
